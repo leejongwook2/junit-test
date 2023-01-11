@@ -1,5 +1,6 @@
-package com.example.junittest;
+package com.example.junittest.chap1;
 
+import com.example.junittest.Study;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
