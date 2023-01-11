@@ -17,25 +17,25 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 //@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class) 메소드명을 대문자로 끊어서 공백으로 변환한 뒤 표시한다.
 class StudyTest {
 
-    @Test
+//    @Test
+//    @Tag("fast") // 로컬에서 테스트를 하고싶다.
     @DisplayName("스터디 만들기 fast")
-    @Tag("fast") // 로컬에서 테스트를 하고싶다.
+    @FastTest
     void create_new_study_fast() {
         Study actual = new Study(100);
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
-    @Test
+//    @Tag("slow") //CI환경(젠킨스 등) 에서 테스트를 하고싶다.
     @DisplayName("스터디 만들기 slow")
-    @Tag("slow") //CI환경(젠킨스 등) 에서 테스트를 하고싶다.
+    @SlowTest
     void create_new_study_slow() {
         Study actual = new Study(100);
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
-    @Test
     @DisplayName("환경변수 테스트")
-    @Tag("fast") // 로컬에서 테스트를 하고싶다.
+    @FastTest
     @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "local")
     void create_new_test2() {
         // 환경변수가 TEST_ENV = local 이 아닌 경우 해당 테스트를 진행하지 않음.
