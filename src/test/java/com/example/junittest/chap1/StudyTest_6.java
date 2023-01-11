@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 
+// 확장기능 구현하기
 //@ExtendWith(FindSlowTestExtension.class) // FindSlowTestExtension 인스턴스를 직접 생성 시 이 코드는 주석처리해야 함
 public class StudyTest_6 {
     private static int value = 1;
