@@ -1,8 +1,14 @@
 package com.example.junittest;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
+import java.time.Duration;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 /**
  * Web 프로젝트를 생성하지 않아도 
@@ -10,6 +16,41 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 //@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class) 메소드명을 대문자로 끊어서 공백으로 변환한 뒤 표시한다.
 class StudyTest {
+
+    @Test
+    @DisplayName("환경변수 테스트")
+    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "jofjsos")
+    void create_new_test2() {
+        // 환경변수가 TEST_ENV = local 이 아닌 경우 해당 테스트를 진행하지 않음.
+        String env = System.getenv("TEST_ENV");
+        System.out.println(env);
+        System.out.println("환경변수 어노테이션 메소드 실행");
+        Study actual = new Study(12);
+        assertThat(actual.getLimit()).isGreaterThan(10);
+    }
+
+    @Test
+    @DisplayName("assumeTrue")
+    @EnabledOnOs({OS.WINDOWS, OS.LINUX}) // 특정 OS 에서 테스트를 실행하고 싶을 때
+    void create_new_study() {
+        String test_dev = System.getenv("TEST_ENV");
+
+        // assumeTrue("LEE_ENV".equalsIgnoreCase(test_dev)); // 해당 조건에 만족하지 않으면 더이상 아래 테스트를 진행하지 않게 됨.
+        assumingThat("LEE_ENV".equalsIgnoreCase(test_dev), () -> {
+            // 조건에 만족할 때에만 표현식 안의 함수를 실행하게 됨.
+            System.out.println("1111");
+            Study actual = new Study(12);
+            assertThat(actual.getLimit()).isGreaterThan(10);
+        });
+
+        assumingThat("LEE_ENV2".equalsIgnoreCase(test_dev), () -> {
+            // 환경변수가 LEE_ENV2 가 아니라서.. 실행하지 않음
+            System.out.println("2222");
+            // 조건에 만족할 때에만 표현식 안의 함수를 실행하게 됨.
+            Study actual = new Study(12);
+            assertThat(actual.getLimit()).isGreaterThan(10);
+        });
+    }
 
     @Test
     @DisplayName("assertThat 사용")
