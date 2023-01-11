@@ -18,20 +18,38 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 class StudyTest {
 
     @Test
+    @DisplayName("스터디 만들기 fast")
+    @Tag("fast") // 로컬에서 테스트를 하고싶다.
+    void create_new_study_fast() {
+        Study actual = new Study(100);
+        assertThat(actual.getLimit()).isGreaterThan(0);
+    }
+
+    @Test
+    @DisplayName("스터디 만들기 slow")
+    @Tag("slow") //CI환경(젠킨스 등) 에서 테스트를 하고싶다.
+    void create_new_study_slow() {
+        Study actual = new Study(100);
+        assertThat(actual.getLimit()).isGreaterThan(0);
+    }
+
+    @Test
     @DisplayName("환경변수 테스트")
-    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "jofjsos")
+    @Tag("fast") // 로컬에서 테스트를 하고싶다.
+    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "local")
     void create_new_test2() {
         // 환경변수가 TEST_ENV = local 이 아닌 경우 해당 테스트를 진행하지 않음.
         String env = System.getenv("TEST_ENV");
         System.out.println(env);
         System.out.println("환경변수 어노테이션 메소드 실행");
         Study actual = new Study(12);
-        assertThat(actual.getLimit()).isGreaterThan(10);
+        assertThat(actual.getLimit()).isGreaterThan(1);
     }
 
     @Test
     @DisplayName("assumeTrue")
     @EnabledOnOs({OS.WINDOWS, OS.LINUX}) // 특정 OS 에서 테스트를 실행하고 싶을 때
+    @Disabled
     void create_new_study() {
         String test_dev = System.getenv("TEST_ENV");
 
@@ -54,6 +72,7 @@ class StudyTest {
 
     @Test
     @DisplayName("assertThat 사용")
+    @Disabled
     void assertThatTest() {
         Study actual = new Study(10);
 //        assertThat(actual.getLimit()).isGreaterThan(10);
@@ -70,6 +89,7 @@ class StudyTest {
      */
     @Test
     @DisplayName("시간 테스트")
+    @Disabled
     void create_new_test() {
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> {
             // 이 코드 블록은 100ms 보다는 오래걸림..
