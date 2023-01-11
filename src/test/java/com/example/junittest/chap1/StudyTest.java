@@ -1,8 +1,8 @@
 package com.example.junittest.chap1;
 
 import com.example.junittest.Study;
-import com.example.junittest.util.FastTest;
-import com.example.junittest.util.SlowTest;
+import com.example.junittest.annotation.FastTest;
+import com.example.junittest.annotation.SlowTest;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnOs;

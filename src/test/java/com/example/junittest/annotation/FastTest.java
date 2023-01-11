@@ -1,4 +1,4 @@
-package com.example.junittest.util;
+package com.example.junittest.annotation;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD) // 메소드에 쓸 수 있다
 @Test
-@Tag("slow")
-public @interface SlowTest {
+@Tag("fast")
+public @interface FastTest {
 }

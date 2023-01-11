@@ -1,7 +1,7 @@
 package com.example.junittest.chap1;
 
 import com.example.junittest.Study;
-import com.example.junittest.util.FastTest;
+import com.example.junittest.annotation.FastTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 

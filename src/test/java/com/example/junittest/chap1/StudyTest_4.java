@@ -1,9 +1,7 @@
 package com.example.junittest.chap1;
 
 import com.example.junittest.Study;
-import com.example.junittest.util.FastTest;
-import com.example.junittest.util.SlowTest;
-import org.assertj.core.api.Assertions;
+import com.example.junittest.annotation.SlowTest;
 import org.junit.jupiter.api.*;
 
 
