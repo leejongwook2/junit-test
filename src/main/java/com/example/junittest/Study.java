@@ -1,5 +1,7 @@
 package com.example.junittest;
 
+import java.time.LocalDateTime;
+
 /**
  * 스프링부트 2.2 부터 Junit5를 기본으로 사용하도록 되어있음.
  * Jupiter Vintage
@@ -14,6 +16,8 @@ public class Study {
     private int limit;
 
     private String name;
+
+    private LocalDateTime localDateTime;
 
     public Study(int limit, String name) {
         this.limit = limit;
@@ -37,6 +41,10 @@ public class Study {
 
     public String getName() {
         return name;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     @Override
