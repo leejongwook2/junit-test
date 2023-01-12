@@ -1,4 +1,11 @@
-package com.example.junittest;
+package com.example.junittest.domain;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -11,24 +18,28 @@ import java.time.LocalDateTime;
  * Jupiter: TestEngine API 구현체
  * Junit Platform: 테스트를 실행해주는 런처 제공. TestEngine API 제공
  */
+@Entity
+@Getter @Setter @NoArgsConstructor
 public class Study {
+    @Id
+    @GeneratedValue
+    private Long id;
     private StudyStatus status = StudyStatus.DRAFT;
-    private int limit;
-
+    private int limitCount;
     private String name;
+    private LocalDateTime openedDateTime;
+    private Long ownerId;
 
-    private LocalDateTime localDateTime;
-
-    public Study(int limit, String name) {
-        this.limit = limit;
+    public Study(int limitCount, String name) {
+        this.limitCount = limitCount;
         this.name = name;
     }
 
-    public Study(int limit) {
-        if (limit < 0) {
+    public Study(int limitCount) {
+        if (limitCount < 0) {
             throw new IllegalArgumentException("limit은 0 보다 커야한다.");
         }
-        this.limit = limit;
+        this.limitCount = limitCount;
     }
 
     public StudyStatus getStatus() {
@@ -36,22 +47,27 @@ public class Study {
     }
 
     public int getLimit() {
-        return limit;
+        return limitCount;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public LocalDateTime getOpenedDateTime() {
+        return openedDateTime;
+    }
+
+    public void open() {
+        this.openedDateTime = LocalDateTime.now();
+        this.status = StudyStatus.OPENED;
     }
 
     @Override
     public String toString() {
         return "Study{" +
                 "status=" + status +
-                ", limit=" + limit +
+                ", limitCount=" + limitCount +
                 ", name='" + name + '\'' +
                 '}';
     }

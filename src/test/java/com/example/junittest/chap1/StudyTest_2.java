@@ -1,6 +1,6 @@
 package com.example.junittest.chap1;
 
-import com.example.junittest.Study;
+import com.example.junittest.domain.Study;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,9 +13,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Ctrl + P 를 누르면 해당 인자에 들어가는 파라미터 종류를 체크할 수 있다.

@@ -1,11 +1,10 @@
 package com.example.junittest.chap1;
 
-import com.example.junittest.Study;
+import com.example.junittest.domain.Study;
 import com.example.junittest.annotation.FastTest;
 import com.example.junittest.annotation.SlowTest;
 import com.example.junittest.util.FindSlowTestExtension;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 
