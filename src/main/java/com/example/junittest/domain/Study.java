@@ -3,6 +3,7 @@ package com.example.junittest.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,8 @@ public class Study {
     private String name;
     private LocalDateTime openedDateTime;
     private Long ownerId;
+    @ManyToOne
+    private Member owner;
 
     public Study(int limitCount, String name) {
         this.limitCount = limitCount;
@@ -59,6 +62,11 @@ public class Study {
     }
 
     public void open() {
+        this.openedDateTime = LocalDateTime.now();
+        this.status = StudyStatus.OPENED;
+    }
+
+    public void publish() {
         this.openedDateTime = LocalDateTime.now();
         this.status = StudyStatus.OPENED;
     }
