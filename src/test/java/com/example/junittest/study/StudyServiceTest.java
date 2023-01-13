@@ -10,11 +10,19 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 /**
  * Mock 어노테이션을 사용하기 위해 MockitoExtension 를 확장하였다.
+ *
+ * 테스트 스텁은 테스트 중에 만들어진 호출에 대해 미리 준비된 답변을 제공하는 것
+ * 만들어진 mock 객체의 메소드를 실행했을 때 어떤 리턴 값을 리턴할지를 정의하는 것이라고 생각하면됨.
+ * 더 쉽게 예를 들자면 내가 아이디가 1L 인 값으로 User를 찾을 때 너는 username = "jongwook" 인  특정 유저 객체를 반환해 라고 정의할 수 있다고.
  */
 @ExtendWith(MockitoExtension.class)
 class StudyServiceTest {
@@ -22,6 +30,90 @@ class StudyServiceTest {
     @Mock MemberService memberService;
 
     @Mock StudyRepository studyRepository;
+
+    /**
+     * 메소드가 동일한 매개변수로 여러번 호출 될 떄 각기 다른 행동을 하도록 조작할 수 있다.
+     */
+    @Test
+    void createExceptionTest_3() {
+        Member member = new Member();
+        member.setId(1L);
+        member.setEmail("jongwook@email.com");
+
+        when(memberService.findById(any()))
+                .thenReturn(Optional.of(member))
+                .thenThrow(new RuntimeException("시간이 다돼었어요"))
+                .thenReturn(Optional.empty());
+
+        Optional<Member> byId = memberService.findById(1L);
+        assertEquals("jongwook@email.com", byId.get().getEmail());
+
+        assertThrows(RuntimeException.class, () -> {
+            memberService.findById(2L);
+        });
+
+        assertEquals(Optional.empty(), memberService.findById(3L));
+    }
+
+    @Test
+    void createExceptionTest_2() {
+        doThrow(new IllegalArgumentException()).when(memberService).validate(2L);
+        assertThrows(IllegalArgumentException.class, () -> {
+            memberService.validate(2L);
+        });
+//        memberService.validate(1L);
+    }
+
+    @Test
+    void createExceptionTest() {
+        Member member = new Member();
+        member.setId(1L);
+        member.setEmail("jongwook@email.com");
+
+        // 1L 로 Member를 Search 하게 되면 RuntimeException 에러가 발생한다.
+        when(memberService.findById(1L)).thenThrow(new RuntimeException("타임 아웃 에러가 발생하였습니다."));
+//        when(memberService.findById(2L)).thenReturn(Optional.of(member));
+
+        Optional<Member> finededMember = memberService.findById(1L);
+        assertEquals("jongwook@email.com", finededMember.get().getEmail());
+
+        doThrow(new IllegalArgumentException()).when(memberService).validate(1L);
+    }
+
+    @Test
+    void createStudyService_4() {
+        Member member = new Member();
+        member.setId(1L);
+        member.setEmail("jongwook@email.com");
+
+        when (memberService.findById(any())).thenReturn(Optional.of(member));
+
+        Study study = new Study(10, "java");
+
+        // 어떤 값을 넣든지간에 테스트가 성공한다. 위에서 인자로 any()를 넣었기 때문에
+        Optional<Member> findById = memberService.findById(4L);
+//        Optional<Member> findById = memberService.findById(3L);
+//        Optional<Member> findById = memberService.findById(2L);
+//        Optional<Member> findById = memberService.findById(1L);
+        assertEquals("jongwook@email.com", findById.get().getEmail());
+    }
+
+    @Test
+    void createStudyService_3() {
+        Member member = new Member();
+        member.setId(1L);
+        member.setEmail("jongwook@email.com");
+
+        // 1L 이라는 값이 인자로 들어갔을 때 member 객체를 리턴해라 라고 정의를 했다.
+        // 그래서 여기서 넘기는 인자 "1L" 가 중요하다.
+        when (memberService.findById(1L)).thenReturn(Optional.of(member));
+//        when (memberService.findById(any())).thenReturn(Optional.of(member));
+
+        Study study = new Study(10, "java");
+
+        Optional<Member> findById = memberService.findById(1L);
+        assertEquals("jongwook@email.com", findById.get().getEmail());
+    }
 
     /**
      * 메소드에 어노테이션 걸수도 있다.

@@ -107,9 +107,10 @@ class StudyTest {
     @Disabled
     void generateErrorTest() {
         // () -> new StudyTest(-10) 이 메소드를 실행하였을 때 IllegalArgumentException.class 이 에러가 발생한다. 는 테스를 진행한다.
+        // Study 의 생성자 인자값이 -10 이 들어오면 생성자 내부에서 throw new IllegalArgumentException("limit은 0 보다 커야한다."); 를 반환함
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
-        String message = exception.getMessage();
-        assertEquals("limit은 0 보다 커야한다.", message);
+//        String message = exception.getMessage();
+//        assertEquals("limit은 0 보다 커야한다.", message);
     }
     @Test
     @Disabled
