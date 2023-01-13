@@ -13,8 +13,8 @@ public class StudyService {
     private final StudyRepository repository;
 
     public StudyService(MemberService memberService, StudyRepository repository) {
-        assert memberService != null;
-        assert repository != null;
+        assert memberService != null; // null 인 경우 assert-exception 이 발생한다.
+        assert repository != null; // null 인 경우 assert-exception 이 발생한다.
         this.memberService = memberService;
         this.repository = repository;
     }
