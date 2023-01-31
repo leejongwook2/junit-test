@@ -37,9 +37,9 @@ public class StudyService {
     }
 
     public Study openStudy(Study study) {
-        study.open();
-        Study openedStudy = repository.save(study);
-        memberService.notify(openedStudy);
+        study.open(); // study의 상태가 open 으로 바뀐다. 그리고 시간 업데이트
+        Study openedStudy = repository.save(study); // 스터디 저장
+        memberService.notify(openedStudy); // 알람
         return openedStudy;
     }
 

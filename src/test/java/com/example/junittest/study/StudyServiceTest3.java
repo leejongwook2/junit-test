@@ -76,6 +76,7 @@ class StudyServiceTest3 {
     @Test
     @DisplayName("verifyNoMoreInteractions 기능 테스트")
     void createNewTest3() {
+        // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
         Member member = new Member();
         member.setId(1L);
@@ -86,9 +87,11 @@ class StudyServiceTest3 {
         when(memberService.findById(1L)).thenReturn(Optional.of(member));
         when(studyRepository.save(study)).thenReturn(study);
 
+        // When
         // 이런 일을 했을 때
         studyService.createNewStudy(1L, study);
 
+        // Then
         // 이 Mock에 있는 notify가 호출이 되었느냐를 확인 할 수 있다.
         // 몇 번이 정확히 호출이 되었는지, 즉 정확히 2번 notify 메소드가 어떤 인자를 가지고 호출이 되었는지...
         verify(memberService, times(1)).notify(study);
