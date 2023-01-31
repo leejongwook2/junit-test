@@ -30,6 +30,9 @@ public class StudyService {
 
         Study newstudy = repository.save(study);
         memberService.notify(newstudy);
+        memberService.notify(member.get());
+
+        // memberService.validate(1L); verifyNoMoreInteractions 기능 테스트를 위해 억지로 넣어봄
         return newstudy;
     }
 
