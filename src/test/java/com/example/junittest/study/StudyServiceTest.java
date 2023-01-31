@@ -40,18 +40,24 @@ class StudyServiceTest {
         member.setId(1L);
         member.setEmail("jongwook@email.com");
 
+        // 1번째로 호출되면 member객체를 리턴
+        // 2번쨰로 호출되면 RuntimeException을 리턴
+        // 3번쨰 호출 시 empty 객체 반환
         when(memberService.findById(any()))
                 .thenReturn(Optional.of(member))
                 .thenThrow(new RuntimeException("시간이 다돼었어요"))
                 .thenReturn(Optional.empty());
 
+        // 1번째 실행
         Optional<Member> byId = memberService.findById(1L);
         assertEquals("jongwook@email.com", byId.get().getEmail());
 
+        // 2번째 실행. 에러를 던저라. memberService가 findById(2L) 를 호출할 때
         assertThrows(RuntimeException.class, () -> {
             memberService.findById(2L);
         });
 
+        // 3번째 실행
         assertEquals(Optional.empty(), memberService.findById(3L));
     }
 

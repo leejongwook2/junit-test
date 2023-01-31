@@ -34,12 +34,15 @@ class StudyServiceTest2 {
         member.setId(1L);
         member.setEmail("jongwook@gmail.com");
 
+        // when 스터빙이 되어있어야만 테스트가 성공적으로 성공할 수 있다.
         Study study = new Study(10, "테스트");
         when(memberService.findById(1L)).thenReturn(Optional.of(member));
         when(studyRepository.save(study)).thenReturn(study);
 
         studyService.createNewStudy(1L, study);
 
+        // studyService.createNewStudy 이 메소드가 하는 일을 테스트 하는 중
+        // createNewStudy 메소드 내에서 getOwnerId에 대한 값을 갱신하고 있는데 그 기능을 확인하는 것
         assertEquals(member.getId(), study.getOwnerId());
     }
 

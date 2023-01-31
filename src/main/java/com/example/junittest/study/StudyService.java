@@ -23,6 +23,7 @@ public class StudyService {
         Optional<Member> member = memberService.findById(memberId);
         if (member.isPresent()) {
             study.setOwnerId(memberId);
+            study.setOwner(member.get());
         } else {
             throw new IllegalArgumentException("Member doesn't exist for id: '" + memberId + "'");
         }
